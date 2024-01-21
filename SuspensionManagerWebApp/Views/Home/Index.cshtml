@@ -4,7 +4,7 @@
 
 <br />
 <br />
-<div class="card border-info mb-3" >
+<div class="card text-bg-info mb-3" >
 	<div class="card-header">
 		<h4 class="card-title">Welcome to suspension manager!</h4>
 	</div>
@@ -22,10 +22,10 @@
 			<div class="card-body">
 				<h5 class="card-title">Please log into your account or register to get started</h5>
 				<br />
-				<a class="btn btn-primary" asp-controller="Home" asp-action="Login">
+				<a class="btn btn-primary" asp-area="Identity" asp-page="/Account/Login">
 					Login
 				</a>
-				<a class="btn btn-primary" asp-controller="Home" asp-action="Register">
+				<a class="btn btn-primary" asp-area="Identity" asp-page="/Account/Register">
 					Register
 				</a>
 			</div>
