@@ -1,20 +1,24 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\a.becker\\Documents\\00_VisualStudio\\SuspensionManagerWebApp\\SuspensionManagerWebApp\\SuspensionManagerWebApp.csproj": {}
+    "D:\\[programming]\\SuspensionManagerASPnet\\SuspensionManagerWebApp\\SuspensionManagerWebApp.csproj": {}
   },
   "projects": {
-    "C:\\Users\\a.becker\\Documents\\00_VisualStudio\\SuspensionManagerWebApp\\SuspensionManagerWebApp\\SuspensionManagerWebApp.csproj": {
+    "D:\\[programming]\\SuspensionManagerASPnet\\SuspensionManagerWebApp\\SuspensionManagerWebApp.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\a.becker\\Documents\\00_VisualStudio\\SuspensionManagerWebApp\\SuspensionManagerWebApp\\SuspensionManagerWebApp.csproj",
+        "projectUniqueName": "D:\\[programming]\\SuspensionManagerASPnet\\SuspensionManagerWebApp\\SuspensionManagerWebApp.csproj",
         "projectName": "SuspensionManagerWebApp",
-        "projectPath": "C:\\Users\\a.becker\\Documents\\00_VisualStudio\\SuspensionManagerWebApp\\SuspensionManagerWebApp\\SuspensionManagerWebApp.csproj",
-        "packagesPath": "C:\\Users\\a.becker\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\a.becker\\Documents\\00_VisualStudio\\SuspensionManagerWebApp\\SuspensionManagerWebApp\\obj\\",
+        "projectPath": "D:\\[programming]\\SuspensionManagerASPnet\\SuspensionManagerWebApp\\SuspensionManagerWebApp.csproj",
+        "packagesPath": "C:\\Users\\Andre\\.nuget\\packages\\",
+        "outputPath": "D:\\[programming]\\SuspensionManagerASPnet\\SuspensionManagerWebApp\\obj\\",
         "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+        ],
         "configFilePaths": [
-          "C:\\Users\\a.becker\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\Andre\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -22,6 +26,7 @@
         ],
         "sources": {
           "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "c:\\program files\\dotnet\\library-packs": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
@@ -80,7 +85,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.401\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "c:\\program files\\dotnet\\sdk\\7.0.101\\RuntimeIdentifierGraph.json"
         }
       }
     }
