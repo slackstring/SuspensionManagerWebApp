@@ -1,0 +1,57 @@
+﻿@* TODO add model implementation*@  @*@model SuspensionManagerWebApp.Models. ....*@
+@model SuspensionManagerWebApp.Models.SusElement;
+@{
+	ViewData["Title"] = "Add";
+}
+
+<form asp-controller="SusElementPosting" asp-action="AddEditSusElementEntry">
+	<br />
+	<br />
+	<div class="card">
+		<h5 class="card-header">
+			<div class="card-title">Add suspension element</div>		
+		</h5>
+
+		<div class="card-body">
+			<input hidden asp-for="Id" />
+			<input hidden asp-for="UserName" />
+			<div class="row form-group mb-3">
+				<div class="col">
+					<input class="form-control" asp-for="Manufacturer" type="text" placeholder="Manufacturer" />
+				</div>
+				<div class="col">
+					<input class="form-control" asp-for="Model" type="text" placeholder="Model" />
+				</div>
+				<div class="col">
+					<input class="form-control" asp-for="ModelYear" type="text" placeholder="Modelyear" />
+				</div>
+			</div>
+			<div class="row form-group mb-3">
+				<div class="col">
+					<input class="form-control" asp-for="Length" type="text" placeholder="Length" />
+				</div>
+				<div class="col">
+					<input class="form-control" asp-for="Stroke" type="text" placeholder="Stroke" />
+				</div>
+			</div>
+			<div class="row form-group mb-3">
+				<div class="col">
+					<label>Choose suspension typ:</label>
+				</div>
+				<div class="col">
+					<select class="form-select" asp-for="SuspensionTyp" type="text">
+							<option selected value="airFork">Air Fork</option>
+							<option value="coilFork">Coil Fork</option>
+							<option value="airShock">Air Shock</option>	
+							<option value="coilShock">Coil Shock</option>
+					</select>
+				</div>		
+			</div>
+
+		</div
+
+		<div class="card-footer">
+			<button class="btn btn-primary" type="Submit">submit</button>
+		</div>
+	</div>
+</form>

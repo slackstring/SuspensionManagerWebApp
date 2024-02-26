@@ -1,0 +1,39 @@
+﻿
+@model List<SuspensionManagerWebApp.Models.SusElement>
+
+@{
+	ViewData["Title"] = "Start";
+}
+
+<br />
+<br />
+<a class="btn btn-primary" asp-controller="SusElementPosting" asp-action="AddEditSusElement">Add suspension element</a>
+<hr />
+<br />
+<table class="table table-striped table-hover">
+	<thead>
+		<tr>
+			<th scope="col">Id</th>
+			<th scope="col">Model</th>
+			<th scope="col">Manufacturer</th>	
+			<th scope="col">Actions</th>
+		</tr>
+	</thead>
+	<tbody>
+		@{
+			foreach (SusElement susElement in Model)
+			{
+				<tr>
+					<td>@susElement.Id</td>
+					<td>@susElement.Model</td>
+					<td>@susElement.Manufacturer</td>
+					<td>
+						<a asp-route-id="@susElement.Id" class="btn btn-info" asp-controller="SusElementPosting" asp-action="ShowSusElement">Show</a>
+						<a asp-route-id="@susElement.Id" class="btn btn-warning" asp-controller="SusElementPosting" asp-action="AddEditSusElement">Edit</a>
+						<a asp-route-id="@susElement.Id" class="btn btn-danger" asp-controller="SusElementPosting" asp-action="DeleteSusElement">Delete</a>		
+					</td>
+				</tr>
+			}
+		}
+	</tbody>
+</table>

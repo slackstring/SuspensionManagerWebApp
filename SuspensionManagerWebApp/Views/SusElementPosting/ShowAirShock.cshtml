@@ -1,0 +1,93 @@
+﻿@model SuspensionManagerWebApp.Models.SusElement
+
+@{
+    ViewData["Title"] = "Settings";
+}
+
+<div class="container mt-4">
+    <div class="row">
+        <!-- obere karte übersicht sus-element -->
+        <div class="col-md-12">
+            <div class="card border-info mb-3">
+                <div class="card-header">
+                    <h5 class="card-title">Current suspension element:</h5>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-2">
+                            <input class="form-control" asp-for="Manufacturer" type="text" readonly />
+                        </div>
+                        <div class="col-md-2">
+                            <input class="form-control" asp-for="Model" type="text" readonly />
+                        </div>
+                        <div class="col-md-2">
+                            <input class="form-control" asp-for="ModelYear" type="text" readonly />
+                        </div>
+                        <div class="col-md-1">
+                            <input class="form-control" asp-for="Length" type="text" readonly />
+                        </div>
+                        <div class="col-md-1">
+                            <input class="form-control" placeholder="x" type="text" readonly />
+                        </div>
+                        <div class="col-md-1">
+                            <input class="form-control" asp-for="Stroke" type="text" readonly />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <br />
+    <hr />
+    <br />
+    <div class="row">
+        <!-- linke karte - Settings Liste -->
+        <div class="col-md-2">
+            <div class="card border-info mb-3">
+                <div class="card-header">
+                    <h5 class="card-title">
+                        Settings
+                    </h5>
+                </div>
+                <div class="card-body">
+                    <div class="col">         
+                        @{
+                            foreach (Setting setting in Model.Settings)
+                            {
+                                <div class="row form-group mb-3">
+                                    <a class="btn btn-info">@setting.Date</a>
+                                </div>
+                            }
+                        }   
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- rechte Karte - Setting Anzeige -->
+        <div class="col-md-10">
+            <div class="card border-info mb-3">
+                <div class="card-body">
+                    <form asp-controller="SusElementPosting" asp-action="AddEditSetting">
+                        <div class="row form-group mb-3">
+                            <div class="col">
+                                <div class="col-form-label">Air pressure:</div>
+                            </div>
+                            <div class="col">
+                                @{
+                                    var airSetting = Model.Settings[0] as AirShockSetting;
+                                    <input class="form-control" asp-for=@airSetting.AirPressure type="text" placeholder="0" />
+                                    
+                                }
+                                
+
+                            </div>
+                            
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+</div>
