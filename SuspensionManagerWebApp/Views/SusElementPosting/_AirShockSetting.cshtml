@@ -1,0 +1,26 @@
+﻿@model SuspensionManagerWebApp.Models.AirShockSetting
+
+@{
+    ViewData["Title"] = "Settings";
+}
+
+<form asp-controller="SusElementPosting" asp-action="AddEditSetting">
+    <div class="row form-group mb-3">
+        <div class="col">
+            <div class="col-form-label">Air pressure:</div>
+        </div>
+        <div class="col">
+            <input class="form-control" asp-for="AirPressure" type="text" placeholder="AirPressure" />
+        </div>
+
+    </div>
+    <div class="row form-group mb-3">
+        <div class="col">
+            <div class="col-form-label">High Speed Compression:</div>
+        </div>
+        <div class="col">
+            <input class="form-control" asp-for="HSC" type="text" placeholder="HSC" />
+        </div>
+
+    </div>
+</form>

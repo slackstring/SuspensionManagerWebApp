@@ -11,7 +11,6 @@ namespace SuspensionManagerWebApp.Models
 		public string HSC { get; set; }
 		public string LSR { get; set; }
 		public string HSR { get; set; }
-		public bool Active { get; set; }
 
 	}
 }

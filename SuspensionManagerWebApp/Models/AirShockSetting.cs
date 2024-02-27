@@ -1,6 +1,6 @@
 ﻿namespace SuspensionManagerWebApp.Models
 {
-    public class AirShockSetting :Setting
+    public class AirShockSetting : Setting
     {
         public int Id { get; set; }
         public string AirPressure { get; set; }

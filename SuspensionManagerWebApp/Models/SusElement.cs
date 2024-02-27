@@ -15,7 +15,6 @@ namespace SuspensionManagerWebApp.Models
         public string SuspensionTyp { get; set; }
         public List<Setting> Settings { get; set; }
 
-        public Setting ActiveSetting { get; set; }  
         
     }
 }

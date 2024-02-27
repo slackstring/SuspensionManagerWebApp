@@ -106,6 +106,29 @@ namespace SuspensionManagerWebApp.Controllers
             return View();
         }
 
+        public IActionResult AirShockSetting(int idSetting, int idSusElement)
+        {
+            var susElementFromDB = _context.SusElements.Where(x => x.Id== idSusElement).Include(x => x.Settings).SingleOrDefault();
+            if (susElementFromDB != null)
+            {
+                foreach(Setting setting in susElementFromDB.Settings)
+                {
+                    if(setting.Id == idSetting)
+                    {
+
+                        AirShockSetting airShockSettingFromDB = setting as AirShockSetting; 
+                        return PartialView("_AirShockSetting", airShockSettingFromDB);
+                    }
+                }
+                return BadRequest();
+            }
+            else
+            {
+                return BadRequest();
+            }
+            
+        }
+
 		public IActionResult DeleteSusElement(int id)
         {
             //TODO Java Script Section hinzufügen um DialogBox zum Bestätigen anzeigen zu lassen

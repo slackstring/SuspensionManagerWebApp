@@ -55,7 +55,7 @@
                             foreach (Setting setting in Model.Settings)
                             {
                                 <div class="row form-group mb-3">
-                                    <a class="btn btn-info">@setting.Date</a>
+                                    <a class="btn btn-info" onclick="onClickedButton(@setting.Id, @Model.Id)">@setting.Date</a>
                                 </div>
                             }
                         }   
@@ -67,7 +67,12 @@
         <div class="col-md-10">
             <div class="card border-info mb-3">
                 <div class="card-body">
-                    <form asp-controller="SusElementPosting" asp-action="AddEditSetting">
+                    <div id="partialView">
+                    </div>
+                   @* <div>
+                         @{await Html.PartialAsync("_AirShockSetting");}
+                    </div>*@
+                   @* <form asp-controller="SusElementPosting" asp-action="AddEditSetting">
                         <div class="row form-group mb-3">
                             <div class="col">
                                 <div class="col-form-label">Air pressure:</div>
@@ -83,7 +88,7 @@
                             </div>
                             
                         </div>
-                    </form>
+                    </form>*@
                 </div>
             </div>
         </div>
@@ -91,3 +96,13 @@
 
     </div>
 </div>
+
+
+@section Scripts {
+    <script>
+        function onClickedButton(idSetting, idSusElement)
+        {
+            $('#partialView').load("/SusElementPosting/AirShockSetting", {idSetting: idSetting, idSusElement : idSusElement})
+        }     
+    </script>
+}

@@ -232,9 +232,6 @@ namespace SuspensionManagerWebApp.Data.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
-                    b.Property<bool>("Active")
-                        .HasColumnType("bit");
-
                     b.Property<string>("Date")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -277,7 +274,7 @@ namespace SuspensionManagerWebApp.Data.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
-                    b.Property<int>("ActiveSettingId")
+                    b.Property<int>("ActiveSetting")
                         .HasColumnType("int");
 
                     b.Property<string>("Length")
@@ -309,8 +306,6 @@ namespace SuspensionManagerWebApp.Data.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("ActiveSettingId");
 
                     b.ToTable("SusElements");
                 });
@@ -371,17 +366,6 @@ namespace SuspensionManagerWebApp.Data.Migrations
                     b.HasOne("SuspensionManagerWebApp.Models.SusElement", null)
                         .WithMany("Settings")
                         .HasForeignKey("SusElementId");
-                });
-
-            modelBuilder.Entity("SuspensionManagerWebApp.Models.SusElement", b =>
-                {
-                    b.HasOne("SuspensionManagerWebApp.Models.Setting", "ActiveSetting")
-                        .WithMany()
-                        .HasForeignKey("ActiveSettingId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("ActiveSetting");
                 });
 
             modelBuilder.Entity("SuspensionManagerWebApp.Models.SusElement", b =>
