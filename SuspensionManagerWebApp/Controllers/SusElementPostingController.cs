@@ -42,8 +42,8 @@ namespace SuspensionManagerWebApp.Controllers
             if (susElement.Id == 0)
             {
                 susElement.UserName = User.Identity.Name;
-                var settingsList = new List<Setting>();
-                susElement.Settings = settingsList;
+               // var settingsList = new List<Setting>();
+               // susElement.Settings = settingsList;
                 _context.SusElements.Add(susElement);   
             }
             else
@@ -59,6 +59,32 @@ namespace SuspensionManagerWebApp.Controllers
 			_context.SaveChanges();
 			return RedirectToAction("Index");
 		}
+
+        public IActionResult DeleteSusElement(int id)
+        {
+            //TODO Java Script Section hinzufügen um DialogBox zum Bestätigen anzeigen zu lassen
+            if (id == 0)
+            {
+                return BadRequest();
+            }
+            else
+            {
+                var susElement = _context.SusElements.Where(x => x.Id == id).SingleOrDefault();
+                if (susElement != null)
+                {
+                    _context.SusElements.Remove(susElement);
+                    _context.SaveChanges();
+                    return RedirectToAction("Index");
+                }
+                else
+                {
+                    return NotFound();
+                }
+
+            }
+
+
+        }
 
         public IActionResult ShowSusElement(int id)
         {
@@ -82,6 +108,8 @@ namespace SuspensionManagerWebApp.Controllers
                             //airSetting.HSC = "1";
                             //airSetting.LSR = "1";
                             //airSetting.HSR = "1";
+                            //airSetting.NNegToken = "0";
+                            //airSetting.NPosToken = "4";
                             //airSetting.AirPressure = "300";
                             //airSetting.Note = "BBLAAAAAAAAAAAAAAAAAAAAA";
                             //airSetting.Date = DateTime.Now.ToString();
@@ -129,29 +157,18 @@ namespace SuspensionManagerWebApp.Controllers
             
         }
 
-		public IActionResult DeleteSusElement(int id)
+        public IActionResult AddEditAirShockSetting(AirShockSetting setting)
         {
-            //TODO Java Script Section hinzufügen um DialogBox zum Bestätigen anzeigen zu lassen
-            if (id ==0)
+            if(setting == null)
             {
-                return BadRequest();
-            }else
-            {
-                var susElement = _context.SusElements.Where(x => x.Id == id).SingleOrDefault();
-                if (susElement != null)
-                {
-					_context.SusElements.Remove(susElement);
-					_context.SaveChanges();
-					return RedirectToAction("Index");
-				}
-                else
-                {
-                    return NotFound();
-                }
-                
+                //TODO neues Setting anlegen hinzufügen
             }
-
-            
+            else
+            {
+                //HIER GEHTS WEITER:
+                //SusElement aus DB holen mit SusElementId => Liste verändern
+            }
+            return View();
         }
 
     

@@ -4,16 +4,35 @@
     ViewData["Title"] = "Settings";
 }
 
-<form asp-controller="SusElementPosting" asp-action="AddEditSetting">
+<form asp-controller="SusElementPosting" asp-action="AddEditAirShockSetting">
+
+    <input hidden asp-for="Id" />
+    <input hidden asp-for="Date" />
+    <input hidden asp-for="SusElementID" />
+    
     <div class="row form-group mb-3">
         <div class="col">
             <div class="col-form-label">Air pressure:</div>
         </div>
         <div class="col">
-            <input class="form-control" asp-for="AirPressure" type="text" placeholder="AirPressure" />
+            <input class="form-control" asp-for="AirPressure" type="text" placeholder="Air pressure" />
         </div>
-
     </div>
+    <div class="row form-group mb-3">
+        <div class="col">
+            <div class="col-form-label">Negative tokens:</div>
+        </div>
+        <div class="col">
+            <input class="form-control" asp-for="NNegToken" type="text" placeholder="0" />
+        </div>
+        <div class="col">
+            <div class="col-form-label">Positive tokens:</div>
+        </div>
+        <div class="col">
+            <input class="form-control" asp-for="NPosToken" type="text" placeholder="0" />
+        </div>
+    </div>
+
     <div class="row form-group mb-3">
         <div class="col">
             <div class="col-form-label">High Speed Compression:</div>
@@ -21,6 +40,44 @@
         <div class="col">
             <input class="form-control" asp-for="HSC" type="text" placeholder="HSC" />
         </div>
-
     </div>
+    <div class="row form-group mb-3">
+        <div class="col">
+            <div class="col-form-label">Low Speed Compression:</div>
+        </div>
+        <div class="col">
+            <input class="form-control" asp-for="LSC" type="text" placeholder="LSC" />
+        </div>
+    </div>
+    <div class="row form-group mb-3">
+        <div class="col">
+            <div class="col-form-label">High Speed Rebound:</div>
+        </div>
+        <div class="col">
+            <input class="form-control" asp-for="HSR" type="text" placeholder="HSR" />
+        </div>
+    </div>
+    <div class="row form-group mb-3">
+        <div class="col">
+            <div class="col-form-label">Low Speed Rebound:</div>
+        </div>
+        <div class="col">
+            <input class="form-control" asp-for="LSR" type="text" placeholder="LSR" />
+        </div>
+    </div>
+
+
+    <div class="row form-group mb-3">
+        <div class="col">
+            <div class="col-form-label">Notes:</div>
+        </div>
+        <textarea class="form-control" asp-for="Note" type="text" rows="8" placeholder="Add notes here..."></textarea>
+    </div>
+
+    <div class="row form-group mb-3">
+        <div class="col">
+            <button class="btn btn-info" type="Submit">Save</button>
+        </div>
+    </div>
+
 </form>

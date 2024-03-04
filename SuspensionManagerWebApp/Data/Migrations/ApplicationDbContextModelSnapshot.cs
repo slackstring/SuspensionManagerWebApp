@@ -256,6 +256,10 @@ namespace SuspensionManagerWebApp.Data.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("SettingType")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<int?>("SusElementId")
                         .HasColumnType("int");
 
@@ -264,6 +268,8 @@ namespace SuspensionManagerWebApp.Data.Migrations
                     b.HasIndex("SusElementId");
 
                     b.ToTable("Setting");
+
+                    b.HasDiscriminator<string>("SettingType").HasValue("Setting");
                 });
 
             modelBuilder.Entity("SuspensionManagerWebApp.Models.SusElement", b =>
@@ -273,9 +279,6 @@ namespace SuspensionManagerWebApp.Data.Migrations
                         .HasColumnType("int");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
-
-                    b.Property<int>("ActiveSetting")
-                        .HasColumnType("int");
 
                     b.Property<string>("Length")
                         .IsRequired()
@@ -308,6 +311,73 @@ namespace SuspensionManagerWebApp.Data.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("SusElements");
+                });
+
+            modelBuilder.Entity("SuspensionManagerWebApp.Models.AirForkSetting", b =>
+                {
+                    b.HasBaseType("SuspensionManagerWebApp.Models.Setting");
+
+                    b.Property<string>("AirPressure")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("AirForkSetting_AirPressure");
+
+                    b.Property<string>("NToken")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasDiscriminator().HasValue("AirForkSetting");
+                });
+
+            modelBuilder.Entity("SuspensionManagerWebApp.Models.AirShockSetting", b =>
+                {
+                    b.HasBaseType("SuspensionManagerWebApp.Models.Setting");
+
+                    b.Property<string>("AirPressure")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("NNegToken")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("NPosToken")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasDiscriminator().HasValue("AirShockSetting");
+                });
+
+            modelBuilder.Entity("SuspensionManagerWebApp.Models.CoilForkSetting", b =>
+                {
+                    b.HasBaseType("SuspensionManagerWebApp.Models.Setting");
+
+                    b.Property<string>("PreloadTurns")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("CoilForkSetting_PreloadTurns");
+
+                    b.Property<string>("SpringRate")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("CoilForkSetting_SpringRate");
+
+                    b.HasDiscriminator().HasValue("CoilForkSetting");
+                });
+
+            modelBuilder.Entity("SuspensionManagerWebApp.Models.CoilShockSetting", b =>
+                {
+                    b.HasBaseType("SuspensionManagerWebApp.Models.Setting");
+
+                    b.Property<string>("PreloadTurns")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("SpringRate")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasDiscriminator().HasValue("CoilShockSetting");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>

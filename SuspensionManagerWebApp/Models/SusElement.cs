@@ -14,7 +14,6 @@ namespace SuspensionManagerWebApp.Models
         public string Stroke { get; set; }
         public string SuspensionTyp { get; set; }
         public List<Setting> Settings { get; set; }
-
-        
+   
     }
 }
