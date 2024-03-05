@@ -2,12 +2,16 @@
 using Microsoft.EntityFrameworkCore;
 using SuspensionManagerWebApp.Data;
 using SuspensionManagerWebApp.Models;
+using System;
 
 namespace SuspensionManagerWebApp.Controllers
 {
+    
     public class SusElementPostingController : Controller
     {
         private readonly ApplicationDbContext _context;
+        private static int activeSusElement;          //BAD PRACTICE! In Webanwendungen keine globalen Variabeln benutzen, lieber Cookies nutzen!
+
         public SusElementPostingController(ApplicationDbContext context)
         {
             _context = context;
@@ -90,6 +94,7 @@ namespace SuspensionManagerWebApp.Controllers
         {
             if(id != 0)
             {
+                activeSusElement = id;
 				var susElement = _context.SusElements.Where(x => x.Id == id).Include(x => x.Settings).SingleOrDefault();
                 if (susElement != null)
                 {
@@ -130,47 +135,68 @@ namespace SuspensionManagerWebApp.Controllers
             {
                 return BadRequest();
             }
-            
-            return View();
+
+            return BadRequest();
         }
 
         public IActionResult AirShockSetting(int idSetting, int idSusElement)
         {
+            activeSusElement = idSusElement;
             var susElementFromDB = _context.SusElements.Where(x => x.Id== idSusElement).Include(x => x.Settings).SingleOrDefault();
             if (susElementFromDB != null)
             {
-                foreach(Setting setting in susElementFromDB.Settings)
+                if(idSetting != 0)
                 {
-                    if(setting.Id == idSetting)
+                    foreach (Setting setting in susElementFromDB.Settings)
                     {
+                        if (setting.Id == idSetting)
+                        {
 
-                        AirShockSetting airShockSettingFromDB = setting as AirShockSetting; 
-                        return PartialView("_AirShockSetting", airShockSettingFromDB);
+                            AirShockSetting airShockSettingFromDB = setting as AirShockSetting;
+                            return PartialView("_AirShockSetting", airShockSettingFromDB);
+                        }
                     }
+                }
+                else
+                {
+                    return PartialView("_AirShockSetting");
                 }
                 return BadRequest();
             }
-            else
-            {
-                return BadRequest();
-            }
-            
+            return BadRequest();
         }
 
         public IActionResult AddEditAirShockSetting(AirShockSetting setting)
         {
-            if(setting == null)
+            var susElementFromDb = _context.SusElements.Where(x => x.Id == activeSusElement).Include(x => x.Settings).SingleOrDefault();
+            if (setting.Id == 0)
             {
-                //TODO neues Setting anlegen hinzufügen
+                setting.Date = DateTime.Now.ToString();
+                setting.SusElementID = activeSusElement;
+                susElementFromDb.Settings.Add(setting);
+                _context.SaveChanges();
             }
             else
             {
-                //HIER GEHTS WEITER:
-                //SusElement aus DB holen mit SusElementId => Liste verändern
+               // var susElementFromDb = _context.SusElements.Where(x => x.Id == activeSusElement).Include(x => x.Settings).SingleOrDefault();
+                var settingToDelete = susElementFromDb.Settings.Where(x => x.Id == setting.Id).SingleOrDefault();
+                susElementFromDb.Settings.Remove(settingToDelete);
+                susElementFromDb.Settings.Add(setting);
+                _context.SaveChanges();
+                
             }
-            return View();
+
+            return RedirectToAction("ShowSusElement", new { id = activeSusElement });
         }
 
+        public IActionResult DeleteSetting(int id)
+        {
+            var susElementFromDb = _context.SusElements.Where(x => x.Id == activeSusElement).Include(x => x.Settings).SingleOrDefault();
+            var settingToDelete = susElementFromDb.Settings.Where(x => x.Id == id).SingleOrDefault();
+            susElementFromDb.Settings.Remove(settingToDelete);
+            _context.SaveChanges();
+            return RedirectToAction("ShowSusElement", new { id = activeSusElement });
+        }
     
     }
 }

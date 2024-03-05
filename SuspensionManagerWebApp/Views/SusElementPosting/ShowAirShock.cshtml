@@ -42,53 +42,43 @@
     <br />
     <div class="row">
         <!-- linke karte - Settings Liste -->
-        <div class="col-md-2">
+        <div class="col-md-3">
             <div class="card border-info mb-3">
                 <div class="card-header">
-                    <h5 class="card-title">
-                        Settings
-                    </h5>
+                    <div class="row">
+                        <div class="col">
+                            <h5 class="card-title">
+                                Settings                  
+                            </h5>
+                        </div>
+                        <div class="col">
+                            <a class="btn btn-outline-info" onclick="onClickedButton(0, @Model.Id)">Add</a>
+                        </div>
+                    </div>
                 </div>
                 <div class="card-body">
-                    <div class="col">         
+                    <div class="col">
                         @{
                             foreach (Setting setting in Model.Settings)
                             {
                                 <div class="row form-group mb-3">
-                                    <a class="btn btn-info" onclick="onClickedButton(@setting.Id, @Model.Id)">@setting.Date</a>
+                                    <div class="col">
+                                        <a class="btn btn-info" onclick="onClickedButton(@setting.Id, @Model.Id)">@setting.Date</a>
+                                        <a class="btn btn-danger" asp-route-id="@setting.Id" asp-controller="SusElementPosting" asp-action="DeleteSetting">Delete</a>
+                                    </div>                          
                                 </div>
                             }
-                        }   
+                        }
                     </div>
                 </div>
             </div>
         </div>
         <!-- rechte Karte - Setting Anzeige -->
-        <div class="col-md-10">
+        <div class="col-md-9">
             <div class="card border-info mb-3">
                 <div class="card-body">
                     <div id="partialView">
                     </div>
-                   @* <div>
-                         @{await Html.PartialAsync("_AirShockSetting");}
-                    </div>*@
-                   @* <form asp-controller="SusElementPosting" asp-action="AddEditSetting">
-                        <div class="row form-group mb-3">
-                            <div class="col">
-                                <div class="col-form-label">Air pressure:</div>
-                            </div>
-                            <div class="col">
-                                @{
-                                    var airSetting = Model.Settings[0] as AirShockSetting;
-                                    <input class="form-control" asp-for=@airSetting.AirPressure type="text" placeholder="0" />
-                                    
-                                }
-                                
-
-                            </div>
-                            
-                        </div>
-                    </form>*@
                 </div>
             </div>
         </div>
@@ -100,9 +90,8 @@
 
 @section Scripts {
     <script>
-        function onClickedButton(idSetting, idSusElement)
-        {
-            $('#partialView').load("/SusElementPosting/AirShockSetting", {idSetting: idSetting, idSusElement : idSusElement})
-        }     
+        function onClickedButton(idSetting, idSusElement) {
+            $('#partialView').load("/SusElementPosting/AirShockSetting", { idSetting: idSetting, idSusElement: idSusElement })
+        }
     </script>
 }
