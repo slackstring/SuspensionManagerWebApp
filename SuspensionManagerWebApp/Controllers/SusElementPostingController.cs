@@ -73,7 +73,7 @@ namespace SuspensionManagerWebApp.Controllers
             }
             else
             {
-                var susElement = _context.SusElements.Where(x => x.Id == id).SingleOrDefault();
+                var susElement = _context.SusElements.Where(x => x.Id == id).Include(x => x.Settings).SingleOrDefault();
                 if (susElement != null)
                 {
                     _context.SusElements.Remove(susElement);
@@ -106,22 +106,8 @@ namespace SuspensionManagerWebApp.Controllers
                         case "coilFork":
                             //TODO Stahlfederdämpfer hinzufügen
                             break;
-                        case "airShock":
-                            //TODO AirSetting später rauslöschen
-                            //var airSetting = new AirShockSetting();
-                            //airSetting.LSC = "1";
-                            //airSetting.HSC = "1";
-                            //airSetting.LSR = "1";
-                            //airSetting.HSR = "1";
-                            //airSetting.NNegToken = "0";
-                            //airSetting.NPosToken = "4";
-                            //airSetting.AirPressure = "300";
-                            //airSetting.Note = "BBLAAAAAAAAAAAAAAAAAAAAA";
-                            //airSetting.Date = DateTime.Now.ToString();
-                            //susElement.Settings.Add(airSetting);
-                            //_context.SaveChanges();
-                            return View("ShowAirShock", susElement);
-                            //TODO Hier gehts weiter
+                        case "airShock":                         
+                            return View("ShowAirShock", susElement);                          
                             break;
                         case "coilShock":
                             //TODO Stahlfederdämpfer hinzufügen
@@ -196,6 +182,30 @@ namespace SuspensionManagerWebApp.Controllers
             susElementFromDb.Settings.Remove(settingToDelete);
             _context.SaveChanges();
             return RedirectToAction("ShowSusElement", new { id = activeSusElement });
+        }
+
+        [HttpPost]  //Backend Call via ajax to Delete Setting after swal.fire popup
+        public IActionResult DeleteSettingById(int id)
+        {
+            if (id==0)
+            {
+                return BadRequest();
+            }
+            else
+            {
+                var susElementFromDB = _context.SusElements.Where(x => x.Id == activeSusElement).Include(x => x.Settings).SingleOrDefault();
+                var settingToDelete = susElementFromDB.Settings.Where(x => x.Id ==id).SingleOrDefault();  
+                if (settingToDelete != null)
+                {
+                    susElementFromDB.Settings.Remove(settingToDelete);
+                    _context.SaveChanges();
+                    return Ok();
+                }
+                else
+                {
+                    return NotFound();
+                }
+            }
         }
     
     }
