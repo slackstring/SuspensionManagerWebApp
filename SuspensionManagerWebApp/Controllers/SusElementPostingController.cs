@@ -184,8 +184,8 @@ namespace SuspensionManagerWebApp.Controllers
             return RedirectToAction("ShowSusElement", new { id = activeSusElement });
         }
 
-        [HttpPost]  //Backend Call via ajax to Delete Setting after swal.fire popup
-        public IActionResult DeleteSettingById(int id)
+        [HttpPost]  //Backend Call via Ajax to Delete SusElement after Swal.Fire PopUp
+		public IActionResult DeleteSettingById(int id)
         {
             if (id==0)
             {
@@ -198,6 +198,29 @@ namespace SuspensionManagerWebApp.Controllers
                 if (settingToDelete != null)
                 {
                     susElementFromDB.Settings.Remove(settingToDelete);
+                    _context.SaveChanges();
+                    return Ok();
+                }
+                else
+                {
+                    return NotFound();
+                }
+            }
+        }
+
+        [HttpPost] //Backend Call via Ajax to Delete SusElement after Swal.Fire PopUp
+        public IActionResult DeleteSusElementById(int id)
+        {
+            if (id == 0)
+            {
+                return BadRequest();    
+            }
+            else
+            {
+                var susElementToDelete = _context.SusElements.Where(x => x.Id == id).Include(x => x.Settings).SingleOrDefault();
+                if (susElementToDelete != null)
+                {
+                    _context.SusElements.Remove(susElementToDelete);
                     _context.SaveChanges();
                     return Ok();
                 }

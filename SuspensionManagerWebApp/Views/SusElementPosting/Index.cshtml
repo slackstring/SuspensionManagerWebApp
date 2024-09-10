@@ -30,10 +30,49 @@
 					<td>
 						<a asp-route-id="@susElement.Id" class="btn btn-info" asp-controller="SusElementPosting" asp-action="ShowSusElement">Show</a>
 						<a asp-route-id="@susElement.Id" class="btn btn-warning" asp-controller="SusElementPosting" asp-action="AddEditSusElement">Edit</a>
-						<a asp-route-id="@susElement.Id" class="btn btn-danger" asp-controller="SusElementPosting" asp-action="DeleteSusElement">Delete</a>		
+						<button onclick="onClickedDeleteSusElementButton(@susElement.Id)" class="btn btn-danger">Delete</button>
+						@*<a asp-route-id="@susElement.Id" class="btn btn-danger" asp-controller="SusElementPosting" asp-action="DeleteSusElement">Delete</a>	*@ 	
 					</td>
 				</tr>
 			}
 		}
 	</tbody>
 </table>
+
+
+@section Scripts {
+
+	<script>
+
+		function onClickedDeleteSusElementButton(id) {
+			Swal.fire({
+				title: "Delete Suspension Element?",
+				icon: "warning",
+				showCloseButton: true,
+				focusConfirm: false,
+				confirmButtonText: 'Yes, delete!',
+			}).then((result) => {
+				if (result.isConfirmed) {
+					//BackendCall to delete Setting via ID
+					$.ajax({
+						type: "POST",
+						url: "@Url.Action("DeleteSusElementById")",
+						data: { id: id },
+						success: function (msg) {
+							Swal.fire('Deleted!', '', 'success').then((result) => {
+								if (result.isConfirmed) {
+									location.reload();
+								}
+							})
+						},
+						error: function (msg) {
+							Swal.fire('Oops, something went wrong!', '', 'error')
+						}
+					});
+
+				}
+			})
+		}
+
+	</script>
+}

@@ -174,15 +174,34 @@
             }}
 
 
-         function onClickedDeleteSettingButton(id)
-            {
+            function onClickedDeleteSettingButton(id) {
                 Swal.fire({
                     title: "Delete setting?",
                     icon: "warning",
                     showCloseButton: true,
                     focusConfirm: false,
-                    confirmButtonText: 'Yes, delete!'
-                });
+                    confirmButtonText: 'Yes, delete!',
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        //BackendCall to delete Setting via ID
+                        $.ajax({
+                            type: "POST",
+                            url: "@Url.Action("DeleteSettingById")",
+                            data: { id: id },
+                            success: function (msg) {
+                                Swal.fire('Deleted!', '', 'success').then((result) => {
+                                    if (result.isConfirmed) {
+                                        location.reload();
+                                    }
+                                })
+                            },
+                            error: function (msg) {
+                                Swal.fire('Oops, something went wrong!', '', 'error')
+                            }
+                        });
+
+                    }
+                })
             }
         </script>
     }
