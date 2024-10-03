@@ -97,23 +97,7 @@ namespace SuspensionManagerWebApp.Controllers
 				var susElement = _context.SusElements.Where(x => x.Id == id).Include(x => x.Settings).SingleOrDefault();
                 if (susElement != null)
                 {
-                    switch (susElement.SuspensionTyp)
-                    {
-                        case "airFork":
-                            //TODO Luftgabel hinzufügen
-                            break;
-                        case "coilFork":
-                            //TODO Stahlfederdämpfer hinzufügen
-                            break;
-                        case "airShock":                         
-                            return View("ShowAirShock", susElement);                          
-                            break;
-                        case "coilShock":
-                            //TODO Stahlfederdämpfer hinzufügen
-                            break;
-                        default: return BadRequest();
-                            break;
-                    }
+                    return View("ShowSusElement", susElement);
                 }
 			}
             else
@@ -124,7 +108,7 @@ namespace SuspensionManagerWebApp.Controllers
             return BadRequest();
         }
 
-        public IActionResult AirShockSetting(int idSetting, int idSusElement)
+        public IActionResult ShowSetting(int idSetting, int idSusElement)
         {
             activeSusElement = idSusElement;
             var susElementFromDB = _context.SusElements.Where(x => x.Id== idSusElement).Include(x => x.Settings).SingleOrDefault();
@@ -136,20 +120,59 @@ namespace SuspensionManagerWebApp.Controllers
                     {
                         if (setting.Id == idSetting)
                         {
+                            switch (susElementFromDB.SuspensionTyp)
+                            {
+                                case "airShock":
+                                    AirShockSetting airShockSettingFromDB = setting as AirShockSetting;
+                                    return PartialView("_AirShockSetting", airShockSettingFromDB);
+                                    break;
+                                case "airFork":
+                                    AirForkSetting airForkSettingFromDB = setting as AirForkSetting;
+                                    return PartialView("_AirForkSetting", airForkSettingFromDB);
+                                    break;
+                                case "coilShock":
+                                    CoilShockSetting coilShockSettingFromDB = setting as CoilShockSetting;
+                                    return PartialView("_CoilShockSetting", coilShockSettingFromDB);
+                                    break;
+                                case "coilFork":
+                                    CoilForkSetting coilForkSettingFromDB = setting as CoilForkSetting;
+                                    return PartialView("_CoilForkSetting", coilForkSettingFromDB);
+                                    break;
+                                default:
+                                    //TODO
+                                    break;
+                            }
 
-                            AirShockSetting airShockSettingFromDB = setting as AirShockSetting;
-                            return PartialView("_AirShockSetting", airShockSettingFromDB);
                         }
                     }
                 }
                 else
                 {
-                    return PartialView("_AirShockSetting");
+                    switch (susElementFromDB.SuspensionTyp)
+                    {
+                        case "airShock":                            
+                            return PartialView("_AirShockSetting");
+                            break;
+                        case "airFork":                           
+                            return PartialView("_AirForkSetting");
+                            break;
+                        case "coilShock":
+                            return PartialView("_CoilShockSetting");
+                            break;
+                        case "coilFork":
+                            return PartialView("_CoilForkSetting");
+                            break;
+                        default:
+                            //TODO
+                            break;
+                    }
                 }
                 return BadRequest();
             }
             return BadRequest();
         }
+
+   
 
         public IActionResult AddEditAirShockSetting(AirShockSetting setting)
         {
