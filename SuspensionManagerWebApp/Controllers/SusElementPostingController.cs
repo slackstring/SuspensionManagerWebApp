@@ -66,7 +66,6 @@ namespace SuspensionManagerWebApp.Controllers
 
         public IActionResult DeleteSusElement(int id)
         {
-            //TODO Java Script Section hinzufügen um DialogBox zum Bestätigen anzeigen zu lassen
             if (id == 0)
             {
                 return BadRequest();
