@@ -120,6 +120,7 @@ namespace SuspensionManagerWebApp.Controllers
                     {
                         if (setting.Id == idSetting)
                         {
+                            //TODO Methode implementieren
                             switch (susElementFromDB.SuspensionTyp)
                             {
                                 case "airShock":
@@ -192,6 +193,29 @@ namespace SuspensionManagerWebApp.Controllers
                 susElementFromDb.Settings.Add(setting);
                 _context.SaveChanges();
                 
+            }
+
+            return RedirectToAction("ShowSusElement", new { id = activeSusElement });
+        }
+
+        public IActionResult AddEditAirForkSetting(AirForkSetting setting)
+        {
+            var susElementFromDb = _context.SusElements.Where(x => x.Id == activeSusElement).Include(x => x.Settings).SingleOrDefault();
+            if (setting.Id == 0)
+            {
+                setting.Date = DateTime.Now.ToString();
+                setting.SusElementID = activeSusElement;
+                susElementFromDb.Settings.Add(setting);
+                _context.SaveChanges();
+            }
+            else
+            {
+                // var susElementFromDb = _context.SusElements.Where(x => x.Id == activeSusElement).Include(x => x.Settings).SingleOrDefault();
+                var settingToDelete = susElementFromDb.Settings.Where(x => x.Id == setting.Id).SingleOrDefault();
+                susElementFromDb.Settings.Remove(settingToDelete);
+                susElementFromDb.Settings.Add(setting);
+                _context.SaveChanges();
+
             }
 
             return RedirectToAction("ShowSusElement", new { id = activeSusElement });
